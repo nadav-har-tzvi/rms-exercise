@@ -11,7 +11,7 @@ RMS consists of the following sections:
 
 The exercise is as follows:
 
-1. Develop a REST API that will serve as a backend for this application. The API must allow creation and retrieval of all entities expected by this application.
+1. Develop REST API enabling application (or RPC based, choose your poison) that will serve as a backend for this application. The API must allow creation and retrieval of all entities expected by this application.
 2. Develop background jobs that make sense (e.g. - one of the data source types is "Social", such background job could be crawling twitter/reddit/your fav social platform)
 3. Connect the application to an OAuth 2.0 enabled identity provider.
 4. Use cloud based PaaS and IaaS services to orchestrate on the cloud, this can be docker based containerization, serverless programming, cloud based storage and so on. 
