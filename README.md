@@ -1,4 +1,21 @@
-# SurveyControlSystem
+# Research Management System (RMS)
+
+RMS is a frontend only system intended to give visual feedback for those who wish to learn how to develop server side applications.
+
+RMS consists of the following sections:
+1. Dashboard that shows recent projects, active data sources, etc.
+2. Projects page is a management page for research projects, through here you can define research projects and whatever datasources are applicable.
+3. One of the data sources is a survey based input, there is a section under the project page that allows building such surveys using SurveyJS.
+4. User management section.
+5. Settings section.
+
+The exercise is as follows:
+
+1. Develop a REST API that will serve as a backend for this application. The API must allow creation and retrieval of all entities expected by this application.
+2. Develop background jobs that make sense (e.g. - one of the data source types is "Social", such background job could be crawling twitter/reddit/your fav social platform)
+3. Connect the application to an OAuth 2.0 enabled identity provider.
+4. Use cloud based PaaS and IaaS services to orchestrate on the cloud, this can be docker based containerization, serverless programming, cloud based storage and so on. 
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
