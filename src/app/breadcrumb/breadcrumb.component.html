@@ -1,0 +1,9 @@
+
+<span *ngFor="let breadcrumb of breadCrumbs$ | async; last as isLast"
+    class="breadcrumb-item" fxFlex>
+  <a  mat-button [routerLink]="[breadcrumb.url]" *ngIf="!isLast">
+    {{ breadcrumb.label }}
+  </a>
+  <span class="last-breadcrumb" *ngIf="isLast">{{breadcrumb.label}}</span>
+  <mat-icon fxFlex="10" *ngIf="!isLast">chevron_right</mat-icon>
+</span>

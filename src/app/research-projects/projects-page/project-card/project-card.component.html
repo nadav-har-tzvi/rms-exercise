@@ -1,0 +1,38 @@
+<mat-card>
+
+  <mat-card-title></mat-card-title>
+  <mat-card-content fxLayout="row">
+    <div fxFlex="25" #imgContainer>
+      <img [src]="project.image || placeHolderUrl" alt="">
+    </div>
+    <mat-divider [vertical]="true" style="margin: 0 1%" ></mat-divider>
+    <div fxFlex="50" class="project-title">
+      <h1>{{project.title}}</h1>
+    </div>
+    <mat-divider [vertical]="true" style="margin: 0 1%" ></mat-divider>
+    <mat-chip-list fxFlex="15">
+      <div><h3>Applicable Data Sources</h3></div>
+      <div>
+        <mat-chip color="primary" *ngFor="let dsType of dataSources"><a [routerLink]="['../projects', project.id, 'datasources']">{{dsType}}</a></mat-chip>
+      </div>
+      <div *ngIf="dataSources.length === 0">No data sources configured!</div>
+    </mat-chip-list>
+    <mat-divider [vertical]="true" style="margin: 0 1%" ></mat-divider>
+    <div fxFlex>
+      <button mat-icon-button>
+        <a [routerLink]="[project.id]" class="left">
+          <mat-icon>edit</mat-icon>
+        </a>
+      </button>
+      <div fxFlex></div>
+      <button mat-icon-button>
+        <a class="right">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </button>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+
+  </mat-card-actions>
+</mat-card>

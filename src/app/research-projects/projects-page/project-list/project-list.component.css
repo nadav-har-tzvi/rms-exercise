@@ -1,0 +1,6 @@
+a:visited, a {
+  color: inherit;
+  text-decoration: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}

@@ -1,0 +1,14 @@
+a:visited, a {
+  color: inherit;
+  text-decoration: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+mat-card {
+  height: 88vh;
+}
+
+mat-card-content, mat-horizontal-stepper, mat-horizontal-stepper div.mat-horizontal-content-container {
+  height: 100%;
+}

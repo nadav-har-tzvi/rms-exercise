@@ -1,0 +1,14 @@
+mat-card {
+  margin: 30px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+mat-card-title {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+table {
+  width: 100%;
+}

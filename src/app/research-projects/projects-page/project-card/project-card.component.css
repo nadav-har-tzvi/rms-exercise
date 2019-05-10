@@ -1,0 +1,21 @@
+mat-card {
+  margin: 10px;
+}
+
+mat-card-title {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+a:visited, a {
+  color: inherit;
+}
+
+
+div.project-title {
+  padding-top: 1%;
+}
+
+mat-card-content img {
+  width: 100%;
+}

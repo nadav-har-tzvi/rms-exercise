@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-title>
+    <button mat-button (click)="addDataSource()"><mat-icon>add</mat-icon> New Data Source</button>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-list fxFlex="row wrap">
+      <app-data-source-card fxFlex="15" *ngFor="let dataSource of dataSources" [dataSource]="dataSource"></app-data-source-card>
+      <app-editable-data-source-card fxFlex="15" *ngIf="newDataSource" [dataSource]="newDataSource" (dataSourceSaved)="saveDataSource($event)"></app-editable-data-source-card>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

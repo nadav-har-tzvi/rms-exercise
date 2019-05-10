@@ -1,0 +1,41 @@
+<div fxLayout="row">
+  <div fxFlex>
+  <form (ngSubmit)="saveProject(basicDetails)" #basicDetails="ngForm">
+    <mat-list>
+      <mat-list-item>
+        <mat-form-field>
+          <input matInput [ngModel]="project.title" placeholder="Project Title" required name="title" #title="ngModel" />
+          <mat-error *ngIf="title.hasError('required')">This field is required</mat-error>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <ngx-mat-file-input placeholder="Banner" [formControl]="image" (change)="preview(image.value)"></ngx-mat-file-input>
+          <mat-error *ngIf="image.getError('invalidFormat')">File is not a valid image</mat-error>
+          <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+        <label>
+          <input type="checkbox" [disabled]="!imgURL" [(ngModel)]="clearImage" name="clearImage">
+          Clear?
+        </label>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <input [ngModel]="dueDate" dataformatas="yyyy-MM-dd" matInput placeholder="Due Date" required type="date" name="dueDate" #dueDateCtrl="ngModel"/>
+          <mat-error *ngIf="dueDateCtrl.hasError('required')">This field is required</mat-error>
+        </mat-form-field>
+      </mat-list-item>
+    </mat-list>
+    <button mat-button [disabled]="!basicDetails.valid">Save</button>
+  </form>
+  </div>
+  <div fxFlex *ngIf="imgURL">
+    <mat-card>
+      <mat-card-title>Project Image Preview</mat-card-title>
+      <img [src]="imgURL"  [width]="500" mat-card-image />
+    </mat-card>
+
+  </div>
+
+</div>
+

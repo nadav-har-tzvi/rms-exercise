@@ -1,0 +1,33 @@
+mat-card {
+  margin: 30px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+mat-card-title {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+.project-created, .project-pending, .project-complete {
+  height: 25px;
+  width: 25px;
+  border: 1px solid black;
+}
+
+.project-pending {
+  background-color: #5CDB95;
+}
+
+.project-closed {
+  background-color: #92c6e7;
+}
+
+.project-created {
+  background-color: #FFE400;
+}
+

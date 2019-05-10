@@ -1,0 +1,10 @@
+mat-icon {
+  padding-top: 6px;
+}
+
+span.last-breadcrumb {
+  line-height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 16px;
+}

@@ -19,13 +19,13 @@ describe('AppComponent', () => {
   it(`should have as title 'survey-control-system'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('survey-control-system');
+    expect(app.title).toEqual('research-management-system');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to survey-control-system!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to research-management-system!');
   });
 });
