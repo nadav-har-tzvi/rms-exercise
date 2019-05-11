@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {Breadcrumb} from './breadcrumb';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ProjectsService} from '../services/projects.service';
 import {LabelledEntityService} from '../services/labelled-entity-service';
 
@@ -45,17 +45,17 @@ export class BreadcrumbComponent implements OnInit {
     let newBreadcrumbs = breadcrumbs;
     let nextUrl = url;
     if (route.routeConfig && route.routeConfig.data && route.routeConfig.data.breadcrumb) {
-      let label = route.routeConfig.data.breadcrumb;
+      const label$ = new BehaviorSubject<string>(route.routeConfig.data.breadcrumb);
       let path = route.routeConfig.path;
       const paramsInPath = path.match(/:\w+/);
       paramsInPath && paramsInPath.forEach(paramStr => {
         const param = paramStr.slice(1);
         path = path.replace(paramStr, this.params[param]);
-        label = this.paramServices[param].getLabelById(parseInt(this.params[param], 10));
+        this.paramServices[param].getLabelById(parseInt(this.params[param], 10)).subscribe(label => label$.next(label));
       });
       nextUrl = `${url}${path}/`;
       const breadcrumb = {
-        label,
+        label: label$,
         url: nextUrl
       };
       newBreadcrumbs = [ ...breadcrumbs, breadcrumb ];

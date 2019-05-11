@@ -13,9 +13,9 @@
     <mat-chip-list fxFlex="15">
       <div><h3>Applicable Data Sources</h3></div>
       <div>
-        <mat-chip color="primary" *ngFor="let dsType of dataSources"><a [routerLink]="['../projects', project.id, 'datasources']">{{dsType}}</a></mat-chip>
+        <mat-chip color="primary" *ngFor="let dsType of dataSources | async"><a [routerLink]="['../projects', project.id, 'datasources']">{{dsType}}</a></mat-chip>
       </div>
-      <div *ngIf="dataSources.length === 0">No data sources configured!</div>
+      <div *ngIf="noSources | async">No data sources configured!</div>
     </mat-chip-list>
     <mat-divider [vertical]="true" style="margin: 0 1%" ></mat-divider>
     <div fxFlex>
@@ -25,7 +25,7 @@
         </a>
       </button>
       <div fxFlex></div>
-      <button mat-icon-button>
+      <button mat-icon-button (click)="deleteProject()">
         <a class="right">
           <mat-icon>delete</mat-icon>
         </a>

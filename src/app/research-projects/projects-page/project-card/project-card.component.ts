@@ -2,7 +2,8 @@ import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@an
 import {ResearchProject} from '../../../models/research-project';
 import {ProjectsService} from '../../../services/projects.service';
 import * as _ from 'lodash';
-import {DataSource} from '../../../models/data-source';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-project-card',
@@ -14,7 +15,8 @@ export class ProjectCardComponent implements OnInit {
   @ViewChild('imgContainer') img: ElementRef;
 
   placeHolderUrl: string;
-  dataSources: string[];
+  dataSources: Observable<string[]>;
+  noSources: Observable<boolean>;
 
   constructor(private projectsService: ProjectsService) { }
 
@@ -30,14 +32,17 @@ export class ProjectCardComponent implements OnInit {
     this.setPlaceHolderUrl();
   };
 
-  getProjectDataSourceTypes(): string[] {
-    const dataSources = this.projectsService.getDataSources(this.project.id);
-    return _.uniq(dataSources.map(ds => ds.type)) as string[];
-  };
-
   ngOnInit() {
     this.setPlaceHolderUrl();
-    this.dataSources = this.getProjectDataSourceTypes();
+    this.dataSources = this.projectsService.getDataSources(this.project.id).pipe(
+      map(dsArray => dsArray.map(ds => ds.type)),
+      map(dsLabels => _.uniq(dsLabels))
+    );
+    this.noSources = this.dataSources.pipe(map(dsLabels => dsLabels.length === 0));
+  }
+
+  deleteProject() {
+    this.projectsService.deleteProject(this.project);
   }
 
 }

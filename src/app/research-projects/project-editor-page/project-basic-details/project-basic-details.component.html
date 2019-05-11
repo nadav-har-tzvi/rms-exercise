@@ -21,7 +21,7 @@
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
-          <input [ngModel]="dueDate" dataformatas="yyyy-MM-dd" matInput placeholder="Due Date" required type="date" name="dueDate" #dueDateCtrl="ngModel"/>
+          <input [ngModel]="project.dueDate | date:'yyyy-MM-dd'" dataformatas="yyyy-MM-dd" matInput placeholder="Due Date" required type="date" name="dueDate" #dueDateCtrl="ngModel"/>
           <mat-error *ngIf="dueDateCtrl.hasError('required')">This field is required</mat-error>
         </mat-form-field>
       </mat-list-item>

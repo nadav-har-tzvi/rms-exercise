@@ -8,8 +8,6 @@
   </mat-card-title>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="column" *ngFor="let rowNumber of rows">
-        <app-project-card *ngFor="let project of getProjectsInRow(rowNumber)" [project]="project"></app-project-card>
-    </div>
+    <app-project-card *ngFor="let project of projects|async" [project]="project"></app-project-card>
   </mat-card-content>
 </mat-card>

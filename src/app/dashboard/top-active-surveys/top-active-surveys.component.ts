@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Survey, SurveyStatus} from '../../models/survey';
 import {ProjectsService} from '../../services/projects.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-top-active-surveys',
@@ -21,9 +23,8 @@ export class TopActiveSurveysComponent implements OnInit {
     ];
   }
 
-  getProjectTitle(projectId: number) {
-    const project = this.projectsService.getProjectById(projectId);
-    return project.title;
+  getProjectTitle(projectId: number): Observable<string> {
+    return this.projectsService.getProjectById(projectId).pipe(map(project => project.title));
   }
 
   getSurveyRespondentsPercentage(survey: Survey) {

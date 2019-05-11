@@ -1,39 +1,62 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ProjectStatus, ResearchProject} from '../models/research-project';
+import {ResearchProject} from '../models/research-project';
 import {DataSourcesService} from './data-sources.service';
 import {LabelledEntityService} from './labelled-entity-service';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {DataSource} from '../models/data-source';
+import {HttpService} from './http.service';
+import {EntityType} from '../utilities/endpoints-config';
+import {map} from 'rxjs/operators';
+import {filter} from 'rxjs/internal/operators/filter';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService implements LabelledEntityService {
 
-  private readonly projects: ResearchProject[];
+  public projects: BehaviorSubject<ResearchProject[]>;
 
-  constructor(private http: HttpClient, private dataSourcesService: DataSourcesService) {
-    this.projects = [
-      new ResearchProject(1, 'Your mother', new Date(), '', ProjectStatus.Pending),
-      new ResearchProject(2, 'A cat', new Date(), '', ProjectStatus.Created),
-      new ResearchProject(3, 'Fink', new Date(), '', ProjectStatus.Pending),
-      new ResearchProject(4, 'Clop', new Date(), '', ProjectStatus.Completed),
-    ];
+  constructor(private dataSourcesService: DataSourcesService, private http: HttpService) {
+    this.projects = new BehaviorSubject<ResearchProject[]>([]);
+    const fetchingProjects$ = http.list<ResearchProject>(EntityType.Project);
+    fetchingProjects$.subscribe(projects => this.projects.next(projects));
   }
 
-  get allProjects(): ResearchProject[] {
-    return this.projects;
+  getProjectById(id: number): Observable<ResearchProject> {
+    return this.projects.pipe(
+      map(projects => projects.find(project => project.id === id) || null),
+      filter(project => project !== null)
+    );
   }
 
-  getProjectById(id: number) {
-    return this.allProjects.find(project => project.id === id);
-  }
-
-  getDataSources(projectId: number) {
+  getDataSources(projectId: number) : Observable<DataSource[]> {
     return this.dataSourcesService.getDataSourcesForProject(projectId);
   }
 
-  getLabelById(id: number) : string {
-    const project = this.getProjectById(id);
-    return project.title;
+  getLabelById(id: number) : Observable<string> {
+    return this.getProjectById(id).pipe(map(project => project.title));
+  }
+
+  createProject(project: ResearchProject) : Observable<ResearchProject> {
+    const obs = this.http.create<ResearchProject>(EntityType.Project, project);
+    obs.subscribe(newProject => {
+      const currentProjects = this.projects.value;
+      currentProjects.push(newProject);
+      this.projects.next(currentProjects);
+    });
+    return obs;
+  }
+
+  updateProject(project: ResearchProject) : Observable<ResearchProject> {
+    return this.http.update(EntityType.Project, project, {projectId: project.id.toString()});
+  }
+
+  deleteProject(project: ResearchProject) {
+    this.http.delete(EntityType.Project, {projectId: project.id.toString()}).subscribe(() => {
+      const currentProjects = this.projects.value;
+      const newProjects = _.remove(currentProjects, proj => proj.id !== project.id);
+      this.projects.next(newProjects);
+    });
   }
 }

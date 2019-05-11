@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectsService} from '../../services/projects.service';
 import {ProjectStatus, ResearchProject} from '../../models/research-project';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-recent-projects',
@@ -9,10 +10,10 @@ import {ProjectStatus, ResearchProject} from '../../models/research-project';
 })
 export class RecentProjectsComponent implements OnInit {
   displayedColumns = ['title', 'dueDate', 'status'];
-  projects: ResearchProject[];
+  projects: Observable<ResearchProject[]>;
 
   constructor(projectsService: ProjectsService) {
-    this.projects = projectsService.allProjects;
+    this.projects = projectsService.projects;
   }
 
   getProjectStatusClass(status: ProjectStatus): string {

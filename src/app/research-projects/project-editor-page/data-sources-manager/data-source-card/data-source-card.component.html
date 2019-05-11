@@ -3,4 +3,8 @@
   <mat-card-content>
     <div>Type: {{dataSource.type}}</div>
   </mat-card-content>
+  <mat-card-actions>
+    <a mat-icon-button [routerLink]="['datasources', dataSource.id]"><mat-icon>edit</mat-icon></a>
+    <button mat-icon-button><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
 </mat-card>

@@ -1,4 +1,6 @@
+import {Observable} from 'rxjs';
+
 export interface Breadcrumb {
-  label: string;
+  label: Observable<string>;
   url: string;
 }

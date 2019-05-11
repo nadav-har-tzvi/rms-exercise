@@ -1,8 +1,6 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ResearchProject} from '../../../models/research-project';
-import {DomSanitizer} from '@angular/platform-browser';
-import {HttpClient} from '@angular/common/http';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {ProjectsService} from '../../../services/projects.service';
 
 @Component({
@@ -12,33 +10,13 @@ import {ProjectsService} from '../../../services/projects.service';
 })
 export class ProjectListComponent implements OnInit {
 
-  projects: ResearchProject[];
-  maxProjectsInRow = 4;
-  rows: number[];
-  projectCardWidth: number;
+  projects: BehaviorSubject<ResearchProject[]>;
 
-  constructor(projectsService: ProjectsService) {
-    this.projectCardWidth = 100 / this.maxProjectsInRow;
-    this.projects = projectsService.allProjects;
-  }
-
-  getProjectsInRow(rowNumber: number) {
-    const projectsStartIdx = rowNumber * this.maxProjectsInRow;
-    const projectsEndIdx = (rowNumber + 1) * this.maxProjectsInRow;
-    return this.projects.slice(projectsStartIdx, projectsEndIdx);
-  }
+  constructor(private projectsService: ProjectsService) {}
 
   ngOnInit() {
-    let numRows = this.projects.length / this.maxProjectsInRow;
-    if (this.projects.length % this.maxProjectsInRow > 0) {
-      numRows += 1;
-    }
-    const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(i);
-    }
-    this.rows = rows;
-
+    this.projects = new BehaviorSubject<ResearchProject[]>(this.projectsService.projects.value);
+    this.projectsService.projects.subscribe(projects => this.projects.next(projects));
   }
 
 }

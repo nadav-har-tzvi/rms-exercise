@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SafePipe } from './safe.pipe';
+import {MatDialogModule, MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
   declarations: [SafePipe],
-  exports: [
-    SafePipe
-  ],
+  exports: [SafePipe],
   imports: [
-    CommonModule
+    CommonModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ]
 })
 export class UtilitiesModule { }

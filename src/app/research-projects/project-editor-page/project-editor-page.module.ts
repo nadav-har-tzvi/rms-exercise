@@ -15,8 +15,8 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {ProjectBasicDetailsComponent} from './project-basic-details/project-basic-details.component';
 import {ProjectEditPageComponent} from './project-edit-page/project-edit-page.component';
 import {FlexModule} from '@angular/flex-layout';
-import {SurveyManagementPageModule} from './survey-management-page/survey-management-page.module';
 import {DataSourcesManagerModule} from './data-sources-manager/data-sources-manager.module';
+import {ProjectEditorPageRoutingModule} from './project-editor-page-routing.module';
 
 @NgModule({
   declarations: [ProjectEditPageComponent, ProjectBasicDetailsComponent],
@@ -36,10 +36,10 @@ import {DataSourcesManagerModule} from './data-sources-manager/data-sources-mana
     MaterialFileInputModule,
     FormsModule,
     FlexModule,
-    SurveyManagementPageModule,
     DataSourcesManagerModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ProjectEditorPageRoutingModule
   ]
 })
 export class ProjectEditorPageModule { }

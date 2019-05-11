@@ -7,12 +7,12 @@
 <mat-tab-group>
   <mat-tab label="Basic Details">
     <ng-template matTabContent>
-      <app-project-basic-details [project]="project"></app-project-basic-details>
+      <app-project-basic-details [project]="project | async"></app-project-basic-details>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Data Sources">
+  <mat-tab label="Data Sources" [disabled]="(project | async).id === undefined">
     <ng-template matTabContent>
-      <app-data-sources-management-page [project]="project"></app-data-sources-management-page>
+      <app-data-sources-management-page [project]="project | async"></app-data-sources-management-page>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

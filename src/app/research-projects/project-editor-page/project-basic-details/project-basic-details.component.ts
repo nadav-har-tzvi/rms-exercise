@@ -1,8 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ResearchProject} from '../../../models/research-project';
-import {FormControl, FormGroup, NgForm} from '@angular/forms';
+import {FormControl, NgForm} from '@angular/forms';
 import {FileInput} from 'ngx-material-file-input';
 import {MatSnackBar} from '@angular/material';
+import {ProjectsService} from '../../../services/projects.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-project-basic-details',
@@ -12,16 +14,18 @@ import {MatSnackBar} from '@angular/material';
 export class ProjectBasicDetailsComponent implements OnInit {
 
 
-  @Input() project: ResearchProject;
+  @Input() project?: ResearchProject;
   image = new FormControl('image', []);
   imgURL: string | ArrayBuffer;
   dueDate: string;
   clearImage = false;
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar, private projectService: ProjectsService) { }
 
   ngOnInit() {
-    this.dueDate = this.project && this.project.dueDate.toISOString().split('T')[0];
+    if (!this.project) {
+      this.project = new ResearchProject();
+    }
     this.imgURL = this.project && this.project.image;
   }
 
@@ -31,9 +35,18 @@ export class ProjectBasicDetailsComponent implements OnInit {
         this.imgURL = '';
       }
       this.project.title = f.value.title;
-      this.project.image = this.imgURL;
       this.project.dueDate = new Date(f.value.dueDate);
-      this.snackBar.open('Project saved successfully!', 'dismiss', {duration: 2000});
+      this.project.image = this.imgURL;
+      let obs: Observable<ResearchProject> = null;
+      if (this.project.id) {
+        obs = this.projectService.updateProject(this.project);
+      } else {
+        obs = this.projectService.createProject(this.project);
+      }
+      obs.subscribe(project => {
+        this.project = project;
+        this.snackBar.open('Project saved successfully!', 'dismiss', {duration: 2000});
+      });
     }
   }
   preview(file: FileInput) {

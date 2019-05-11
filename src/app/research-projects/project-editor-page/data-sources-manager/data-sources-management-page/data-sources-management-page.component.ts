@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ResearchProject} from '../../../../models/research-project';
 import {DataSource} from '../../../../models/data-source';
+import * as _ from 'lodash';
+import {DataSourcesService} from '../../../../services/data-sources.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-data-sources-management-page',
@@ -10,13 +13,13 @@ import {DataSource} from '../../../../models/data-source';
 export class DataSourcesManagementPageComponent implements OnInit {
 
   @Input() project: ResearchProject;
-  dataSources: DataSource[];
+  dataSources: Observable<DataSource[]>;
   newDataSource: DataSource;
 
-  constructor() { }
+  constructor(private dataSourceService: DataSourcesService) { }
 
   ngOnInit() {
-    this.dataSources = [];
+    this.dataSources = this.dataSourceService.dataSources;
   }
 
   addDataSource() {
@@ -24,7 +27,7 @@ export class DataSourcesManagementPageComponent implements OnInit {
   }
 
   saveDataSource(dataSource: DataSource) {
-    this.dataSources.push(dataSource);
+    this.dataSourceService.addDataSource(dataSource);
     this.newDataSource = null;
   }
 
