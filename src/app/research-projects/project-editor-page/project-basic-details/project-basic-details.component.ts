@@ -5,6 +5,7 @@ import {FileInput} from 'ngx-material-file-input';
 import {MatSnackBar} from '@angular/material';
 import {ProjectsService} from '../../../services/projects.service';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-project-basic-details',
@@ -20,7 +21,7 @@ export class ProjectBasicDetailsComponent implements OnInit {
   dueDate: string;
   clearImage = false;
 
-  constructor(private snackBar: MatSnackBar, private projectService: ProjectsService) { }
+  constructor(private snackBar: MatSnackBar, private projectService: ProjectsService, private router: Router) { }
 
   ngOnInit() {
     if (!this.project) {
@@ -42,6 +43,9 @@ export class ProjectBasicDetailsComponent implements OnInit {
         obs = this.projectService.updateProject(this.project);
       } else {
         obs = this.projectService.createProject(this.project);
+        obs.subscribe(project => {
+          this.router.navigate(['/projects', project.id]);
+        });
       }
       obs.subscribe(project => {
         this.project = project;

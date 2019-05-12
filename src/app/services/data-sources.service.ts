@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {DataSource, DataSourceType} from '../models/data-source';
 import * as _ from 'lodash';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpRequest} from '@angular/common/http';
-import {EndpointAction, EndpointsConfig, EntityType} from '../utilities/endpoints-config';
+import {map, share} from 'rxjs/operators';
+import {EntityType} from '../utilities/endpoints-config';
 import {HttpService} from './http.service';
 import {switchMap} from 'rxjs/internal/operators/switchMap';
 
@@ -19,9 +18,9 @@ class SurveyConfigurator implements DataSourceConfigurator {
 
   save(): Observable<DataSource> {
     if (this.dataSource.configuration) {
-      return this.http.update<DataSource>(EntityType.Survey, this.configuration);
+
     } else {
-      return this.http.create<DataSource>(EntityType.Survey, this.configuration);
+      return this.http.create<DataSource>(EntityType.DataSource, this.configuration);
     }
   }
 }
@@ -37,6 +36,7 @@ export class DataSourcesService {
 
   constructor(private http: HttpService) {
     this.dataSources = new BehaviorSubject<DataSource[]>([]);
+    http.list<DataSource>(EntityType.DataSource).subscribe(datasources => this.dataSources.next(datasources));
   }
 
   getDataSourcesForProject(projectId: number): Observable<DataSource[]> {
@@ -44,28 +44,32 @@ export class DataSourcesService {
   }
 
   addDataSource(dataSource: DataSource) {
-    const currentDataSources = this.dataSources.getValue();
-    const maxId = _.max(currentDataSources.map(ds => ds.id)) || 0;
-    dataSource.id = maxId + 1;
-    currentDataSources.push(dataSource);
-    this.dataSources.next(currentDataSources);
+    this.http.create<DataSource>(EntityType.DataSource, dataSource).subscribe(newDataSource => {
+      const currentDataSources = this.dataSources.getValue();
+      currentDataSources.push(newDataSource);
+      this.dataSources.next(currentDataSources);
+    });
+
   }
 
   getDataSourceById(id: number): Observable<DataSource> {
     return this.dataSources.pipe(map(dsArray => dsArray.find(ds => ds.id === id)));
   }
 
-  saveDataSourceConfiguration(dataSourceId: number, configuration: any) {
-      return this.getDataSourceById(dataSourceId).pipe(
-        map(ds => {
-          switch (ds.type) {
-            case DataSourceType.Survey:
-              return new SurveyConfigurator(ds, configuration, this.http);
-            case DataSourceType.Social:
-              throw new Error('Social configuration isn\'t supported!');
-          }
-        }),
-        switchMap(configurator => configurator.save())
-      );
+  saveDataSourceConfiguration(dataSourceId: number, configuration: any): Observable<DataSource> {
+    return new Observable<DataSource>(observer => {
+      this.getDataSourceById(dataSourceId).subscribe(
+        ds => {
+          ds.configuration = configuration;
+          const obs = this.http.update<DataSource>(EntityType.DataSource, ds, {dataSourceId: dataSourceId.toString()});
+          obs.subscribe(updatedDs => {
+            const currentDataSources = this.dataSources.value;
+            const dsIdx = currentDataSources.findIndex(dsToFind => dsToFind.id === dataSourceId);
+            currentDataSources[dsIdx] = updatedDs;
+            this.dataSources.next(currentDataSources);
+            observer.next(updatedDs);
+          });
+        });
+    });
   }
 }

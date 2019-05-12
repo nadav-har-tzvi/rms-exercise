@@ -27,6 +27,7 @@ export class DataSourcesManagementPageComponent implements OnInit {
   }
 
   saveDataSource(dataSource: DataSource) {
+    dataSource.projectId = this.project.id;
     this.dataSourceService.addDataSource(dataSource);
     this.newDataSource = null;
   }

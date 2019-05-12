@@ -41,23 +41,23 @@ export class EndpointsConfig {
     },
     [EntityType.DataSource]: {
       [EndpointAction.Create]: {
-        url: '',
+        url: 'api/datasources/',
         method: 'POST'
       },
       [EndpointAction.Delete]: {
-        url: '',
+        url: 'api/datasources/:dataSourceId/',
         method: 'DELETE'
       },
       [EndpointAction.List]: {
-        url: '',
+        url: 'api/datasources',
         method: 'GET'
       },
       [EndpointAction.Retrieve]: {
-        url: '',
+        url: 'api/datasources/:dataSourceId',
         method: 'GET'
       },
       [EndpointAction.Update]: {
-        url: '',
+        url: 'api/datasources/:dataSourceId/',
         method: 'PUT'
       }
     },

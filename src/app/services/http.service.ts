@@ -33,6 +33,6 @@ export class HttpService {
 
   update<T>(entityType: EntityType, body: any, urlParams?: {[k: string]: string}, queryParams?: {[k: string]: string}): Observable<T> {
     const config = EndpointsConfig.getHttpConfig(entityType, EndpointAction.Update, urlParams, queryParams);
-    return this.http.put<T>(config.url, body);
+    return this.http.put<T>(config.url, body).pipe(share());
   }
 }
