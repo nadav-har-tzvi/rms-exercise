@@ -1,10 +1,10 @@
 <mat-card>
-  <mat-card-title>{{dataSource.name}}</mat-card-title>
+  <mat-card-title>{{survey.name}}</mat-card-title>
   <mat-card-content>
-    <div>Type: {{dataSource.type}}</div>
+    <div>Goal: {{survey.respondentsGoal}} Respondents</div>
   </mat-card-content>
   <mat-card-actions>
-    <a mat-icon-button [routerLink]="['datasources', dataSource.id]"><mat-icon>edit</mat-icon></a>
+    <a mat-icon-button [routerLink]="['datasources', survey.id]"><mat-icon>edit</mat-icon></a>
     <button mat-icon-button><mat-icon>delete</mat-icon></button>
   </mat-card-actions>
 </mat-card>

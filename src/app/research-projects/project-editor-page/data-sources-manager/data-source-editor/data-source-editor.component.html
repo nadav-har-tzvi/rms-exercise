@@ -1,2 +1,1 @@
-<app-data-source-survey-editor *ngIf="(dataSource | async).type === 'Survey'" [dataSource]="dataSource | async"></app-data-source-survey-editor>
-<div *ngIf="(dataSource | async).type !== 'Survey'">{{(dataSource|async).type}} is not supported at the moment!</div>
+<app-data-source-survey-editor [dataSource]="dataSource"></app-data-source-survey-editor>

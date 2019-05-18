@@ -1,3 +1,5 @@
+import { DataSource } from './data-source';
+
 export enum SurveyStatus {
   Active = 'Active',
   Closed = 'Closed',
@@ -5,15 +7,17 @@ export enum SurveyStatus {
   Created = 'Created'
 }
 
-export class Survey {
+export class Survey extends DataSource {
   constructor(
-    public id: string,
-    public title: string,
-    public pages: string[],
-    public status: SurveyStatus,
-    public respondentsGoal: number,
-    public loi: number,
-    public projectId: number,
-    public created: Date,
-    public statusChanged: Date) {}
+    public id?: number,
+    public name?: string,
+    public status?: SurveyStatus,
+    public respondentsGoal?: number,
+    public loi?: number,
+    public projectId?: number,
+    public created?: Date,
+    public statusChanged?: Date,
+    public configuration?: string) {
+    super(id, name, projectId, configuration);
+  }
 }

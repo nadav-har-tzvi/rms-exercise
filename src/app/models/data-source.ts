@@ -3,6 +3,6 @@ export enum DataSourceType {
   Social = 'Social'
 }
 
-export class DataSource {
-  constructor(public id?: number, public name?: string, public type?: DataSourceType, public projectId?: number, public configuration?: any) {}
+export abstract class DataSource {
+  constructor(public id?: number, public name?: string, public projectId?: number, public configuration?: any) {}
 }

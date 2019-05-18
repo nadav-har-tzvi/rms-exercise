@@ -2,18 +2,23 @@
   <mat-card>
     <mat-card-title>
       <mat-form-field>
-        <input type="text" matInput [(ngModel)]="dataSource.name" placeholder="Data Source Name" name="dataSourceName" #dataSourceName="ngModel" [required]="true">
+        <input type="text" matInput [(ngModel)]="survey.name" placeholder="Survey Name" name="dataSourceName" #dataSourceName="ngModel" [required]="true">
         <mat-error *ngIf="dataSourceName.hasError('required')">This field is required!</mat-error>
       </mat-form-field>
     </mat-card-title>
     <mat-card-content>
-        <mat-form-field>
+        <!--<mat-form-field>
           <mat-label>Data Source Type</mat-label>
           <mat-select [required]="true" [(ngModel)]="dataSource.type" #dataSourceType="ngModel" name="dataSourceType">
             <mat-option *ngFor="let dsType of dataSourceTypes" [value]="dsType">{{dsType}}</mat-option>
           </mat-select>
           <mat-error *ngIf="dataSourceTypeControl.hasError('required')">You must select a data source type!</mat-error>
-        </mat-form-field>
+        </mat-form-field>-->
+      <mat-form-field>
+        <input type="number" name="surveyRespondentsGoal" matInput [(ngModel)]="survey.respondentsGoal" placeholder="Target number of respondents" #surveyRespondentsGoal="ngModel" [required]="True" />
+        <mat-error *ngIf="surveyRespondentsGoal.hasError('required')">This field is required!</mat-error>
+        <mat-error *ngIf="surveyRespondentsGoal.hasError('min')">A survey may have at least 50 respondents!</mat-error>
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button type="submit">Save</button>

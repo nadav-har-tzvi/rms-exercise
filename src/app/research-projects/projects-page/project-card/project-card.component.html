@@ -13,7 +13,9 @@
     <mat-chip-list fxFlex="15">
       <div><h3>Applicable Data Sources</h3></div>
       <div>
-        <mat-chip color="primary" *ngFor="let dsType of dataSources | async"><a [routerLink]="['../projects', project.id, 'datasources']">{{dsType}}</a></mat-chip>
+        <mat-chip color="primary">
+        <a [routerLink]="['../projects', project.id, 'datasources']">{{dataSources | async}} Surveys</a>
+        </mat-chip>
       </div>
       <div *ngIf="noSources | async">No data sources configured!</div>
     </mat-chip-list>

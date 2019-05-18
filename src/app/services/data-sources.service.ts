@@ -6,6 +6,7 @@ import {map, share} from 'rxjs/operators';
 import {EntityType} from '../utilities/endpoints-config';
 import {HttpService} from './http.service';
 import {switchMap} from 'rxjs/internal/operators/switchMap';
+import { Survey } from '../models/survey';
 
 
 interface DataSourceConfigurator {
@@ -36,7 +37,7 @@ export class DataSourcesService {
 
   constructor(private http: HttpService) {
     this.dataSources = new BehaviorSubject<DataSource[]>([]);
-    http.list<DataSource>(EntityType.DataSource).subscribe(datasources => this.dataSources.next(datasources));
+    http.list<Survey>(EntityType.Survey).subscribe(datasources => this.dataSources.next(datasources));
   }
 
   getDataSourcesForProject(projectId: number): Observable<DataSource[]> {
@@ -44,7 +45,7 @@ export class DataSourcesService {
   }
 
   addDataSource(dataSource: DataSource) {
-    this.http.create<DataSource>(EntityType.DataSource, dataSource).subscribe(newDataSource => {
+    this.http.create<Survey>(EntityType.Survey, dataSource).subscribe(newDataSource => {
       const currentDataSources = this.dataSources.getValue();
       currentDataSources.push(newDataSource);
       this.dataSources.next(currentDataSources);
@@ -57,18 +58,21 @@ export class DataSourcesService {
   }
 
   saveDataSourceConfiguration(dataSourceId: number, configuration: any): Observable<DataSource> {
-    return new Observable<DataSource>(observer => {
+    let newDataSources: DataSource[] = [];
+    return new Observable<Survey>(observer => {
       this.getDataSourceById(dataSourceId).subscribe(
         ds => {
-          ds.configuration = configuration;
-          const obs = this.http.update<DataSource>(EntityType.DataSource, ds, {dataSourceId: dataSourceId.toString()});
+          ds.configuration = JSON.stringify(configuration);
+          const obs = this.http.update<Survey>(EntityType.Survey, ds, { dataSourceId: dataSourceId.toString() });
           obs.subscribe(updatedDs => {
             const currentDataSources = this.dataSources.value;
             const dsIdx = currentDataSources.findIndex(dsToFind => dsToFind.id === dataSourceId);
             currentDataSources[dsIdx] = updatedDs;
-            this.dataSources.next(currentDataSources);
+            newDataSources = currentDataSources;
             observer.next(updatedDs);
           });
+        }, console.error, () => {
+          this.dataSources.next(newDataSources);
         });
     });
   }

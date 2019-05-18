@@ -12,10 +12,10 @@ export class SurveyCostEstimationComponent implements OnInit {
 
   constructor() {
     this.surveys = [
-      new Survey('asda', 'asdas', [], SurveyStatus.Created, 100, 5, 1, new Date(), new Date()),
-      new Survey('asda2', 'asdas2', [], SurveyStatus.Active, 50, 10, 1, new Date(), new Date()),
-      new Survey('asda3', 'asdas3', [], SurveyStatus.Ready, 10, 20, 2, new Date(), new Date()),
-      new Survey('asda4', 'asdas4', [], SurveyStatus.Closed, 200, 30, 2, new Date(), new Date()),
+      new Survey(1, 'asdas', SurveyStatus.Created, 100, 5, 1, new Date(), new Date()),
+      new Survey(2, 'asdas2', SurveyStatus.Active, 50, 10, 1, new Date(), new Date()),
+      new Survey(3, 'asdas3', SurveyStatus.Ready, 10, 20, 2, new Date(), new Date()),
+      new Survey(4, 'asdas4', SurveyStatus.Closed, 200, 30, 2, new Date(), new Date()),
     ];
   }
 

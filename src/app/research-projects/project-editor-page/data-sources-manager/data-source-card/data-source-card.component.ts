@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataSource} from '../../../../models/data-source';
+import { Survey } from 'src/app/models/survey';
 
 @Component({
   selector: 'app-data-source-card',
@@ -8,7 +8,7 @@ import {DataSource} from '../../../../models/data-source';
 })
 export class DataSourceCardComponent implements OnInit {
 
-  @Input() dataSource: DataSource;
+  @Input() survey: Survey;
 
   constructor() { }
 

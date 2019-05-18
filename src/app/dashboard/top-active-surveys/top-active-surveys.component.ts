@@ -3,6 +3,7 @@ import {Survey, SurveyStatus} from '../../models/survey';
 import {ProjectsService} from '../../services/projects.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {DataSourcesService} from '../../services/data-sources.service';
 
 @Component({
   selector: 'app-top-active-surveys',
@@ -12,15 +13,9 @@ import {map} from 'rxjs/operators';
 export class TopActiveSurveysComponent implements OnInit {
 
   displayedColumns = ['title', 'project', 'respondents_number', 'respondents_progress', 'last_updated'];
-  surveys: Survey[];
+  surveys: Observable<Survey[]>;
 
-  constructor(private projectsService: ProjectsService) {
-    this.surveys = [
-      new Survey('asda', 'asdas', [], SurveyStatus.Created, 100, 5, 1, new Date(), new Date()),
-      new Survey('asda2', 'asdas2', [], SurveyStatus.Active, 300, 10, 1, new Date(), new Date()),
-      new Survey('asda3', 'asdas3', [], SurveyStatus.Ready, 150, 20, 2, new Date(), new Date()),
-      new Survey('asda4', 'asdas4', [], SurveyStatus.Closed, 50, 30, 2, new Date(), new Date()),
-    ];
+  constructor(private projectsService: ProjectsService, private dataSourceService: DataSourcesService) {
   }
 
   getProjectTitle(projectId: number): Observable<string> {
@@ -36,10 +31,11 @@ export class TopActiveSurveysComponent implements OnInit {
   }
 
   getLastUpdated(survey: Survey) {
-    return new Date();
+    return survey.statusChanged;
   }
 
   ngOnInit() {
+    this.surveys = this.dataSourceService.dataSources;
   }
 
 }

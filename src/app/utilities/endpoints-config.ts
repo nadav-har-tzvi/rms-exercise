@@ -19,7 +19,7 @@ export class EndpointsConfig {
   static endpointsConfig = {
     [EntityType.Project]: {
       [EndpointAction.Create]: {
-        url: 'api/projects/',
+        url: 'api/projects',
         method: 'POST'
       },
       [EndpointAction.Delete]: {
@@ -67,19 +67,19 @@ export class EndpointsConfig {
         method: 'POST'
       },
       [EndpointAction.Delete]: {
-        url: '',
+        url: 'api/surveys/:dataSourceId',
         method: 'DELETE'
       },
       [EndpointAction.List]: {
-        url: '',
+        url: 'api/surveys',
         method: 'GET'
       },
       [EndpointAction.Retrieve]: {
-        url: '',
+        url: 'api/surveys/:dataSourceId',
         method: 'GET'
       },
       [EndpointAction.Update]: {
-        url: '',
+        url: 'api/surveys/:dataSourceId',
         method: 'PUT'
       }
     }

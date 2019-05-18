@@ -4,8 +4,8 @@
   </mat-card-title>
   <mat-card-content>
     <mat-list fxFlex="row wrap">
-      <app-data-source-card fxFlex="15" *ngFor="let dataSource of dataSources | async" [dataSource]="dataSource"></app-data-source-card>
-      <app-editable-data-source-card fxFlex="15" *ngIf="newDataSource" [dataSource]="newDataSource" (dataSourceSaved)="saveDataSource($event)"></app-editable-data-source-card>
+      <app-data-source-card fxFlex="15" *ngFor="let dataSource of dataSources | async" [survey]="dataSource"></app-data-source-card>
+      <app-editable-data-source-card fxFlex="15" *ngIf="newDataSource" [survey]="newDataSource" (surveySaved)="saveDataSource($event)"></app-editable-data-source-card>
     </mat-list>
   </mat-card-content>
 </mat-card>

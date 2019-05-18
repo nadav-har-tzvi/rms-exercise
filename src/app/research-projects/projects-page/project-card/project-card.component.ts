@@ -15,7 +15,7 @@ export class ProjectCardComponent implements OnInit {
   @ViewChild('imgContainer') img: ElementRef;
 
   placeHolderUrl: string;
-  dataSources: Observable<string[]>;
+  dataSources: Observable<number>;
   noSources: Observable<boolean>;
 
   constructor(private projectsService: ProjectsService) { }
@@ -35,10 +35,9 @@ export class ProjectCardComponent implements OnInit {
   ngOnInit() {
     this.setPlaceHolderUrl();
     this.dataSources = this.projectsService.getDataSources(this.project.id).pipe(
-      map(dsArray => dsArray.map(ds => ds.type)),
-      map(dsLabels => _.uniq(dsLabels))
+      map(x => x.length)
     );
-    this.noSources = this.dataSources.pipe(map(dsLabels => dsLabels.length === 0));
+    this.noSources = this.dataSources.pipe(map(numSources => numSources === 0));
   }
 
   deleteProject() {

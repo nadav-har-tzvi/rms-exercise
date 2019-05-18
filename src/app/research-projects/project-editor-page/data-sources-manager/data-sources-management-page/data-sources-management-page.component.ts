@@ -4,6 +4,7 @@ import {DataSource} from '../../../../models/data-source';
 import * as _ from 'lodash';
 import {DataSourcesService} from '../../../../services/data-sources.service';
 import {Observable} from 'rxjs';
+import { Survey } from 'src/app/models/survey';
 
 @Component({
   selector: 'app-data-sources-management-page',
@@ -23,7 +24,7 @@ export class DataSourcesManagementPageComponent implements OnInit {
   }
 
   addDataSource() {
-    this.newDataSource = new DataSource();
+    this.newDataSource = new Survey();
   }
 
   saveDataSource(dataSource: DataSource) {

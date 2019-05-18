@@ -3,6 +3,7 @@ import {DataSourceCardComponent} from '../data-source-card/data-source-card.comp
 import {DataSource, DataSourceType} from '../../../../models/data-source';
 import {FormControl, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import { Survey, SurveyStatus } from 'src/app/models/survey';
 
 @Component({
   selector: 'app-editable-data-source-card',
@@ -13,9 +14,10 @@ export class EditableDataSourceCardComponent extends DataSourceCardComponent {
 
   dataSourceTypes = [];
   dataSourceTypeControl = new FormControl('', [Validators.required]);
+  surveyRespondentsGoal = new FormControl('', [Validators.required, Validators.min(50)])
   projectId: number;
 
-  @Output() dataSourceSaved = new EventEmitter<DataSource>();
+  @Output() surveySaved = new EventEmitter<Survey>();
 
   constructor(private activatedRoute: ActivatedRoute) {
     super();
@@ -33,10 +35,18 @@ export class EditableDataSourceCardComponent extends DataSourceCardComponent {
 
   saveDataSource(f: NgForm) {
     if (f.valid) {
-      this.dataSource.type = f.value.dataSourceType;
-      this.dataSource.name = f.value.dataSourceName;
-      this.dataSource.projectId = this.projectId;
-      this.dataSourceSaved.emit(this.dataSource);
+      const newSurvey = new Survey(
+        null,
+        f.value.dataSourceName,
+        SurveyStatus.Created,
+        f.value.surveyRespondentsGoal,
+        null,
+        this.projectId,
+        null,
+        null,
+        null
+      );
+      this.surveySaved.emit(newSurvey);
     }
   }
 

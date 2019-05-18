@@ -2,14 +2,14 @@
   <mat-card-title>Survey Activity</mat-card-title>
   <mat-divider [inset]="true"></mat-divider>
   <mat-card-content>
-    <table mat-table [dataSource]="surveys">
+    <table mat-table [dataSource]="surveys | async">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let survey"><a href="/surveys/{{survey.id}}">{{survey.title}}</a></td>
+        <td mat-cell *matCellDef="let survey"><a href="/surveys/{{survey.id}}">{{survey.name}}</a></td>
       </ng-container>
       <ng-container matColumnDef="project">
         <th mat-header-cell *matHeaderCellDef>Project</th>
-        <td mat-cell *matCellDef="let survey"><a href="/projects/{{survey.projectId}}">{{getProjectTitle(survey.projectId)}}</a></td>
+        <td mat-cell *matCellDef="let survey"><a href="/projects/{{survey.projectId}}">{{getProjectTitle(survey.projectId) | async}}</a></td>
       </ng-container>
       <ng-container matColumnDef="respondents_number">
         <th mat-header-cell *matHeaderCellDef>Completed/Goal</th>
