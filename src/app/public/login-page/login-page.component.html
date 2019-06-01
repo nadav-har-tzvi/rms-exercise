@@ -1,0 +1,26 @@
+<form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+<mat-card>
+  <mat-card-header>Login to RMS</mat-card-header>
+  <mat-card-content>
+
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field>
+            <input matInput type="text" [ngModel]="username" placeholder="Username" required name="username" #usernameCtrl="ngModel" />
+            <mat-error *ngIf="usernameCtrl.hasError('required')">This field is required</mat-error>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field>
+            <input matInput type="password" [ngModel]="password" placeholder="Password" required name="password" #passwordCtrl="ngModel" />
+            <mat-error *ngIf="passwordCtrl.hasError('required')">This field is required</mat-error>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+  </mat-card-content>
+  <mat-card-footer>
+    <button mat-button [disabled]="!loginForm.valid">Login</button>
+    <mat-error *ngIf="loginError">{{loginError}}</mat-error>
+  </mat-card-footer>
+</mat-card>
+</form>
