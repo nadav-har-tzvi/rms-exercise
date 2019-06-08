@@ -17,7 +17,9 @@ import {CommonUtilsModule} from '../common-utils/common.module';
     FormsModule,
     MatCardModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    FlexLayoutModule,
+    MatButtonModule
   ]
 })
 export class PublicModule { }

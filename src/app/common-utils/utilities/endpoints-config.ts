@@ -86,7 +86,7 @@ export class EndpointsConfig {
     },
     [EntityType.User]: {
       Authenticate: {
-        url: 'api/users/authenticate',
+        url: 'api/user/authenticate',
         method: 'POST'
       }
     }
