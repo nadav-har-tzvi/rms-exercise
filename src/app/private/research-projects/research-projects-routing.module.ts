@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {ProjectEditPageComponent} from './project-editor-page/project-edit-page/project-edit-page.component';
 import {ProjectListComponent} from './projects-page/project-list/project-list.component';
 import {ProjectsPageComponent} from './projects-page/projects-page/projects-page.component';
+import {DataSourceEditorComponent} from './project-editor-page/data-sources-manager/data-source-editor/data-source-editor.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: ':projectId/datasources/:dataSourceId',
+    component: DataSourceEditorComponent
   }
 ];
 

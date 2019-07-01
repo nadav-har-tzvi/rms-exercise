@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBase: 'http://localhost:8088'
+  apiBase: 'https://rmsapinhzz.azurewebsites.net'
 };
 
 /*

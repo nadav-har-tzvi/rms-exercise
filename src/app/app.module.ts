@@ -5,7 +5,9 @@ import {CommonUtilsModule} from './common-utils/common.module';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpAuthInterceptor} from './common-utils/auth/http-auth-interceptor';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,12 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     BrowserAnimationsModule,
     CommonUtilsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
