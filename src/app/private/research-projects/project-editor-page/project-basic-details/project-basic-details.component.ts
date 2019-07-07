@@ -27,8 +27,8 @@ export class ProjectBasicDetailsComponent implements OnInit {
   @Input()
   set project(project: ResearchProject) {
     this._project = project;
-    if (this.project.image && this.project.image.data) {
-      this.imgURL = `data:${this.project.image.mimeType};base64,${this.project.image.data}`;
+    if (this.project.image && this.project.image.publicUri) {
+      this.imgURL = this.project.image.publicUri;
     }
   }
 

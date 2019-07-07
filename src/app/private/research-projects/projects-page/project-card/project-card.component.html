@@ -3,7 +3,7 @@
   <mat-card-title></mat-card-title>
   <mat-card-content fxLayout="row">
     <div fxFlex="25" #imgContainer>
-      <img [src]="project.image || placeHolderUrl" alt="">
+      <img [src]="project.image.publicUri || placeHolderUrl" alt="">
     </div>
     <mat-divider [vertical]="true" style="margin: 0 1%" ></mat-divider>
     <div fxFlex="50" class="project-title">
